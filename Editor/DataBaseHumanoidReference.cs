@@ -8,7 +8,7 @@ using System;
 
 public class HumanoidBoneRefTbl{
     public static List<HumanoidBoneRow> Parse(string path){
-        path = "./Assets/0Development/DataManager/Editor/HumanoidRule.csv";
+        path = "./Assets/shooil/DataManager/Editor/HumanoidRule.csv";
         var lines = File.ReadAllLines(path,Encoding.Default);
         var Query = from line in lines.Skip(1)
                     let column = line.Split(',')
