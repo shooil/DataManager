@@ -1,0 +1,56 @@
+HumanoidName,ParentHumanoidName,KeyWord,Depth
+Hips,None,Hips,2
+LeftUpperLeg,Hips,Leg,3
+RightUpperLeg,Hips,Leg,3
+LeftLowerLeg,LeftUpperLeg,Leg.Knee,4
+RightLowerLeg,RightUpperLeg,Leg.Knee,4
+LeftFoot,LeftLowerLeg,Foot.Ankle,5
+RightFoot,RightLowerLeg,Foot.Ankle,5
+Spine,Hips,Spine,3
+Chest,Spine,Chest,4
+UpperChest,Chest,Chest,5
+Neck,Chest,Neck,5
+Head,Neck,Head,6
+LeftShoulder,Chest,Shoulder,5
+RightShoulder,Chest,Shoulder,5
+LeftUpperArm,LeftShoulder,Arm,6
+RightUpperArm,RightShoulder,Arm,6
+LeftLowerArm,LeftUpperArm,Arm.Elbow,7
+RightLowerArm,RightUpperArm,Arm.Elbow,7
+LeftHand,LeftLowerArm,Hand.Wrist,8
+RightHand,RightLowerArm,Hand.Wrist,8
+LeftToes,LeftFoot,Toes,6
+RightToes,RightFoot,Toes,6
+LeftEye,Head,Eye,7
+RightEye,Head,Eye,7
+Jaw,Head,Jaw,7
+Left Thumb Proximal,LeftHand,Thumb,9
+Left Thumb Intermediate,Left Thumb Proximal,Thumb,10
+Left Thumb Distal,Left Thumb Intermediate,Thumb,11
+Left Index Proximal,LeftHand,Index,9
+Left Index Intermediate,Left Index Proximal,Index,10
+Left Index Distal,Left Index Intermediate,Index,11
+Left Middle Proximal,LeftHand,Middle,9
+Left Middle Intermediate,Left Middle Proximal,Middle,10
+Left Middle Distal,Left Middle Intermediate,Middle,11
+Left Ring Proximal,LeftHand,Ring,9
+Left Ring Intermediate,Left Ring Proximal,Ring,10
+Left Ring Distal,Left Ring Intermediate,Ring,11
+Left Little Proximal,LeftHand,Little,9
+Left Little Intermediate,Left Little Proximal,Little,10
+Left Little Distal,Left Little Intermediate,Little,11
+Right Thumb Proximal,RightHand,Thumb,9
+Right Thumb Intermediate,Right Thumb Proximal,Thumb,10
+Right Thumb Distal,Right Thumb Intermediate,Thumb,11
+Right Index Proximal,RightHand,Index,9
+Right Index Intermediate,Right Index Proximal,Index,10
+Right Index Distal,Right Index Intermediate,Index,11
+Right Middle Proximal,RightHand,Middle,9
+Right Middle Intermediate,Right Middle Proximal,Middle,10
+Right Middle Distal,Right Middle Intermediate,Middle,11
+Right Ring Proximal,RightHand,Ring,9
+Right Ring Intermediate,Right Ring Proximal,Ring,10
+Right Ring Distal,Right Ring Intermediate,Ring,11
+Right Little Proximal,RightHand,Little,9
+Right Little Intermediate,Right Little Proximal,Little,10
+Right Little Distal,Right Little Intermediate,Little,11
