@@ -20,7 +20,7 @@ namespace DataManager
             DataManagerCostume costume = target as DataManagerCostume;
             if (GUILayout.Button("1.Initialize"))
             {
-                this.Initialize(costume.Avatar, costume.AvatarArmature, costume.Costume, costume.CostumeArmature);
+                this.Initialize(costume.Avatar, costume.CostumeList);
             }
             if (GUILayout.Button("2.AddSufix"))
             {
@@ -28,20 +28,38 @@ namespace DataManager
             }
             if (GUILayout.Button("3.Costume"))
             {
-                this.Costume();
+                this.Costume(costume.Avatar, costume.CostumeList);
             }
             if (GUILayout.Button("Opt.Copy DB to Armature"))
             {
                 this.CopyDBToRootBone(costume.Avatar);
             }
         }
-        public void Initialize(GameObject Avatar, GameObject AvatarArmature, GameObject Target, GameObject TargetArmature)
+        public void Initialize(GameObject Avatar, List<GameObject> Targets)
         {
-            this._writeAvatarTbl(Avatar, AvatarArmature);
-            this._writeTargetTbl(Target, TargetArmature);
+            var TargetTbl = new List<HumanoidBoneRow>();
+            // Get all armature game objects
+            var Avatar_Armature = GameObjectQuery.GetGameObjectsByName(Avatar, "Hips", 3)[0].transform.parent.gameObject;
+            this._writeAvatarTbl(Avatar, Avatar_Armature);
+            foreach (var Target in Targets)
+            {
+                var Candidates = GameObjectQuery.GetGameObjectsByName(Target, "Hips", 3);
+                if(Candidates.Count == 1){
+                    var Target_Armature = Candidates[0].transform.parent.gameObject;
+                    TargetTbl.AddRange(this._getTargetTbl(Target, Target_Armature));
+                }else{
+                    Debug.Log("No armature error:"+Target.name);
+                    continue;
+                }
+            }
+            this.TargetHumanoidTbl = TargetTbl;
         }
-        public void Costume()
+
+        public void Costume(GameObject Avatar, List<GameObject> Targets)
         {
+            // ==========================================================
+            // Move all bone in costume into avatar base on data in table
+            // ==========================================================
             var Tbl = from arow in this.AvatarTbl
                       join crow in this.TargetHumanoidTbl
                       on arow.HumanoidName equals crow.HumanoidName
@@ -51,6 +69,13 @@ namespace DataManager
             foreach (var row in Tbl.ToList())
             {
                 row.CostumeBone.transform.parent = row.AvatarBone.transform;
+            }
+
+            // ==========================================================
+            // Move other game objects into avatar
+            // ==========================================================
+            foreach (var target in Targets){
+                target.transform.parent = Avatar.transform;
             }
         }
         public void AddSuffix(string suffix)
@@ -96,14 +121,15 @@ namespace DataManager
             ABTbl.WriteAvatarBoneDataTbl(Avatar, Armature);
             this.AvatarTbl = ABTbl.Tbl;
         }
-        private void _writeTargetTbl(GameObject Target, GameObject TargetArmature)
+
+        private List<HumanoidBoneRow> _getTargetTbl(GameObject Target, GameObject TargetArmature)
         {
             AvatarBoneTbl TaTbl = new AvatarBoneTbl();
             TaTbl.WriteAvatarBoneDataTbl(Target, TargetArmature);
             this.TargetTbl = TaTbl.Tbl;
             HumanoidRule TaTblHu = new HumanoidRule();
             TaTblHu.Categorize(TaTbl.Tbl);
-            this.TargetHumanoidTbl = TaTblHu.Tbl;
+            return TaTblHu.Tbl;
         }
     }
 }

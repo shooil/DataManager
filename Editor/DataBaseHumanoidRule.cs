@@ -17,12 +17,14 @@ namespace DataManager
 
             // ============================================================================================================================
             // Read humanoid bone assignment from csv file, and add regex expression to table
+            // ============================================================================================================================
             var RefTbl = HumanoidBoneRefTbl.Parse("");
             var Query = from row in RefTbl
                         select new { HumanoidName = row.HumanoidName, Expression = "(" + String.Join("|", row.Expressions) + ")", Depth = row.Depth };
 
             // ============================================================================================================================
             // Query humanoid bone name and depth not devided by left and right from csv file
+            // ============================================================================================================================
             var MainQuery = from MainRow in Query
                             where !MainRow.HumanoidName.Contains("Left") && !MainRow.HumanoidName.Contains("Right")
                             select MainRow;
@@ -33,6 +35,7 @@ namespace DataManager
 
             // ============================================================================================================================
             // Query humanoid bone name and depth devided by left and right from csv file
+            // ============================================================================================================================
             var LimbQuery = from LimbRow in Query
                             where LimbRow.HumanoidName.Contains("Left") || LimbRow.HumanoidName.Contains("Right")
                             select LimbRow;

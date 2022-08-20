@@ -22,7 +22,7 @@ namespace DataManager
         }
 
         /// <summary>Query function to get parent GameObjects of Target GameObject relative to Root GameObject, Depth of Root Object is 1 </summary>
-        /// <param name="Root">Root GameObject to stop </param>
+        /// <param name="Root">Root GameObject to stop</param>
         /// <param name="Target">Target GameObject to find Parent GameObjects</param>
         public static List<GameObject> GetRelativeParentsQuery(GameObject Root, GameObject Target)
         {
@@ -33,6 +33,20 @@ namespace DataManager
                         select Object.gameObject;
             RelativeParents = Query.ToList();
             return RelativeParents;
+        }
+
+        /// <summary>Query function to get GameObject by name and depth</summary>
+        /// <param name="Root">Root GameObject for searching</param>
+        /// <param name="ObjectName">Name of GameObject for searching</param>
+        /// <param name="Depth">Relative depth of GameObject to Root for searching</param>
+        public static List<GameObject> GetGameObjectsByName(GameObject Root,string ObjectName,int Depth){
+            List<GameObject> GameObjectList = new List<GameObject>();
+            var Query = from Object in Root.GetComponentsInChildren<Transform>(includeInactive: true)
+                        where Object.name == ObjectName
+                        where GetRelativeParentsQuery(Root,Object.gameObject).Count == Depth
+                        select Object.gameObject;
+            GameObjectList = Query.ToList();
+            return GameObjectList;
         }
     }
 
